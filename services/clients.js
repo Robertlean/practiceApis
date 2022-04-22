@@ -1,7 +1,8 @@
 const clientRepo = require('../repositories/clients');
 
 const getAll = async () => {
-  const response = await clientRepo.getAll()
+  const response = await clientRepo.getAll();
+  return response
 }
 
 const getById = async (id) => {

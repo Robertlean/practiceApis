@@ -27,7 +27,7 @@ const create = async (req, res, next) => {
     const response = await clientsServices.create(req.body);
     res.status(200).json({
       success: true,
-      msg: `${response.firstName} your client has been created`,
+      msg: `${response.firstName} ${response.lastName} has been created`,
       data: response,
     });
   } catch (error){
@@ -41,7 +41,7 @@ const update = async (req, res, next) => {
     res.status(200).json({
       success: 200,
       msg: `Client ${req.params.numberClient} is updated succesfully`,
-      dara: response
+      data: response
     })
   } catch (error){
     next(error)

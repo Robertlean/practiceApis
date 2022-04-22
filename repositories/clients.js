@@ -6,7 +6,8 @@ const getAll = async () => {
 }
 
 const getById = async (idClient) => {
-  const response = await db.Client.findByPk(idClient)
+  const response = await db.Client.findOne({ where: { numberClient: idClient } })
+  return response
 }
 
 const create = async (clientData) => {
@@ -17,7 +18,7 @@ const create = async (clientData) => {
 const update = async (data, id) => {
   const response = await db.Client.update(data, {
     where: {
-      idClient: id
+      numberClient: id
     }
   });
   return response;
@@ -26,7 +27,7 @@ const update = async (data, id) => {
 const remove = async (id) => {
   const response = await db.Client.destroy({
     where: {
-      idClient: id
+      numberClient: id
     }
   })
 };

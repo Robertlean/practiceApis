@@ -1,55 +1,45 @@
 const express = require('express');
 const router = express.Router();
-const clientController = require('../controllers/clients')
-const clientMiddleware = require('../middlewares/clients')
+const productController = require('../controllers/products');
+const productMiddleware = require('../middlewares/products')
 
-router.get('/', clientController.getAll);
-router.get('/:id', clientController.getById);
-router.post('/create', clientMiddleware.validator, clientController.create)
-router.put('/:id', clientController.update);
-router.delete('/:id', clientController.remove);
+router.get('/', productController.getAll);
+router.get('/:id', productController.getById);
+router.post('/create', productMiddleware.validator, productController.create);
+router.put('/:id', productController.update);
+router.delete('/:id', productController.remove)
 
 /**
  * @swagger
  * {
  *  "components": {
  *    "schemas": {
- *      "Client": {
+ *      "Product": {
  *        "type": "object",
  *        "properties": {
- *          "firstName": {
- *            "type": "string",
- *            "description": "Client first name"
- *          },
- *          "lastName": {
- *            "type": "string",
- *            "description": "Client last name"
- *          },
- *          "phoneNumber": {
+ *          "code": {
  *            "type": "integer",
- *            "description": "Client phone number"
+ *            "description": "Product code"
  *          },
- *          "address": {
+ *          "name": {
  *            "type": "string",
- *            "description": "Client Adress"
+ *            "description": "Product name"
  *          },
- *          "city": {
- *            "type": "string",
- *            "description": "Client city"
+ *          "price": {
+ *            "type": "integer",
+ *            "description": "Product price"
  *          },
- *          "numberClient": {
- *           "type": "integer",
- *           "description": "Client number" 
+ *          "stock": {
+ *            "type": "integer",
+ *            "description": "Product stock"
  *          }
  *        },
- *        "required": ["firstName", "lastName", "address", "city"],
+ *        "required": ["code", "name", "price"],
  *        "example": {
- *          "numberClient": 1200,
- *          "firstName": "Roberto",
- *          "lastName": "Veintemilla",
- *          "phoneNumber": 01151372235,
- *          "address": "Sarmiento 435",
- *          "city": "Pilar"
+ *          "code": 31721,
+ *          "name": "Empanada integral de verdura El Noble",
+ *          "price": 1954.12,
+ *          "stock": 7
  *        }
  *      }
  *    }
@@ -59,10 +49,10 @@ router.delete('/:id', clientController.remove);
 
 /**
  * @swagger
- * "/clients/": {
+ * "/products/": {
  *  "get": {
- *    "summary": "List of all clients",
- *    "tags": ["Clients"],
+ *    "summary": "List of all products",
+ *    "tags": ["Products"],
  *    "responses": {
  *      "200": {
  *        "description": "Successfully"
@@ -72,15 +62,15 @@ router.delete('/:id', clientController.remove);
  *          "schema": {
  *            "type": "object",
  *            "items": {
- *              "$ref": "#/components/schemas/Client"
+ *              "$ref": "#/components/chemas/Product"
  *            }
  *          }
  *        }
  *      },
  *      "404": {
- *        "description": "Not found Clients"
+ *        "description": "Not found Products"
  *      },
- *      "500": {
+ *      "500":{
  *        "description": "Internal Server Error"
  *      }
  *    }
@@ -90,18 +80,18 @@ router.delete('/:id', clientController.remove);
 
 /**
  * @swagger
- * "/clients/{id}": {
+ * "/products/{id}": {
  *  "get": {
- *    "summary": "Get a client by id.",
- *    "tags": ["Clients"],
+ *    "summary": "Get a product by id.",
+ *    "tags": ["Products"],
  *    "parameters": [
  *      {
  *        "name": "id",
  *        "in": "path",
- *        "description": "The id of the client",
+ *        "description": "The id of the product",
  *        "required": false,
  *        "type": "integer",
- *        "example": 1133
+ *        "example": "120"
  *      }
  *    ],
  *    "responses": {
@@ -109,7 +99,7 @@ router.delete('/:id', clientController.remove);
  *        "description": "Successfully operation"
  *      },
  *      "400": {
- *        "description": "Client not found"
+ *        "description": "Product not Found"
  *      },
  *      "500": {
  *        "description": "Internal Server Error"
@@ -117,32 +107,31 @@ router.delete('/:id', clientController.remove);
  *    }
  *  }
  * }
- * 
  */
 
 /**
  * @swagger
- * "/clients/create": {
+ * "/products/create": {
  *  "post": {
- *    "summary": "Create a new client",
- *    "tags": ["Clients"],
+ *    "summary": "Create a new product",
+ *    "tags": ["Products"],
  *    "requestBody": {
  *      "required": true,
  *      "content": {
  *        "application/json": {
  *          "schema": {
  *            "type": "object",
- *            "$ref": "#/components/schemas/Client"
+ *            "$ref": "#/components/schemas/Product"
  *          }
  *        }
  *      }
  *    },
  *    "responses": {
  *      "200": {
- *        "description": "Client created"
+ *        "description": "Product created"
  *      },
  *      "404": {
- *        "description": "Client already exists"
+ *        "description": "Product already exists"
  *      },
  *      "500": {
  *        "description": "Internal Server Error"
@@ -154,14 +143,14 @@ router.delete('/:id', clientController.remove);
 
 /**
  * @swagger
- * "/clients/{id}": {
+ * "/products/{id}": {
  *  "put": {
- *    "summary": "Update a client by id.",
+ *    "summary": "Update a product by id.",
  *    "parameters": [
  *      {
  *        "name": "id",
  *        "in": "path",
- *        "description": "Id of the client",
+ *        "description": "Id of the product",
  *        "required": true,
  *        "type": "integer"
  *      }
@@ -172,18 +161,18 @@ router.delete('/:id', clientController.remove);
  *        "application/json": {
  *          "schema": {
  *            "type": "object",
- *            "$ref": "#/components/schemas/Client"
+ *            "$ref": "#/components/schemas/Product"
  *          }
  *        }
  *      }
  *    },
- *    "tags" :["Clients"],
+ *    "tags": ["Products"],
  *    "responses": {
  *      "200": {
- *        "description": "Client has been update"
+ *        "description": "Product has been update"
  *      },
  *      "404": {
- *        "description": "Client not found"
+ *        "description": "Product not found"
  *      },
  *      "500": {
  *        "description": "Internal Server Error"
@@ -195,25 +184,25 @@ router.delete('/:id', clientController.remove);
 
 /**
  * @swagger
- * "/clients/{id}": {
+ * "/products/{id}": {
  *  "delete": {
- *    "summary": "Delete a client by id.",
+ *    "summary": "Delete a product by id.",
  *    "parameters": [
  *      {
  *        "name": "id",
  *        "in": "path",
- *        "description": "Client id",
+ *        "description": "Product id",
  *        "required": true,
  *        "type": "integer"
  *      }
  *    ],
- *    "tags": ["Clients"],
+ *    "tags": ["Products"],
  *    "responses": {
  *      "200": {
- *        "description": "Client has been delete"
+ *        "description": "Product has been delete"
  *      },
  *      "404": {
- *        "description": "Client not found"
+ *        "description": "Product not found"
  *      },
  *      "500": {
  *        "description": "Internal Server Error"
@@ -223,4 +212,4 @@ router.delete('/:id', clientController.remove);
  * }
  */
 
- module.exports = router
+module.exports = router

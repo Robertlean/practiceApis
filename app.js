@@ -12,7 +12,8 @@ require('dotenv').config();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var clientRouter = require('./routes/users');
+var clientRouter = require('./routes/clients');
+var productRouter = require('./routes/products')
 
 const SPECS = swaggerJsDoc(options)
 
@@ -31,7 +32,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/client', clientRouter)
+app.use('/clients', clientRouter);
+app.use('/products', productRouter);
 app.use('/apis-docs', swaggerUI.serve, swaggerUI.setup(SPECS))
 
 // catch 404 and forward to error handler

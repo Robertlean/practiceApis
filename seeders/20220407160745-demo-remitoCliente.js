@@ -2,14 +2,16 @@
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('remitoClient', [{
+    await queryInterface.bulkInsert('remitoClients', [{
      idProduct: 30504,
      cantidad: 3,
-     idRemito: 1
+     idRemito: 1,
+     createdAt: new Date(),
+    updatedAt: new Date()
     }], {});
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('remitoClient', null, {});
+    await queryInterface.bulkDelete('remitoClients', null, {});
   }
 };
